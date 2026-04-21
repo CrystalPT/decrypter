@@ -3,16 +3,29 @@ import sys
 import os
 
 def identify_hash_type(hash_value):
-    # identify the hash
     length = len(hash_value)
-    if length == 32:
-        return "MD5"
-    elif length == 40:
-        return "SHA1"
-    elif length == 64:
-        return "SHA256"
-    else:
-        return "Unknown"
+    is_hex = bool(re.match(r'^[a-f0-9]+$', hash_value))
+
+    if hash_value.startswith('$2a$') or h.startswith('$2b$'):
+        return 'bcrypt'
+    if hash_value.startswith('$1$'):
+        return "MD5-crypt"
+    if hash_value.startswith('$6$'):
+        return "SHA-512-crypt"
+
+    if is_hex:
+        if length == 32:
+            return 'MD5'
+        elif length == 40:
+            return 'SHA1'
+        elif length == 64:
+            return 'SHA256'
+        elif length == 128:
+            return 'SHA512'
+    if hash_value.endswith('='):
+        return "Probably Base64 (not a hash!)"
+
+    return "Unknown format"
 
 def crack_hash(target_hash, wordlist_path, hash_type):
     # try to crack the hash, use words from the txt file
