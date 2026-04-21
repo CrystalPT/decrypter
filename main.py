@@ -1,6 +1,7 @@
 import hashlib
 import sys
 import os
+import re
 
 def identify_hash_type(hash_value):
     length = len(hash_value)
