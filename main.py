@@ -25,7 +25,7 @@ def identify_hash_type(hash_value):
     if hash_value.endswith('='):
         return "Probably Base64 (not a hash!)"
 
-    return "Unknown format"
+    return "Unknown"
 
 def crack_hash(target_hash, wordlist_path, hash_type):
     # try to crack the hash, use words from the txt file
